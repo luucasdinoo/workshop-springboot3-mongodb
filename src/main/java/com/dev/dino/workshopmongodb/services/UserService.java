@@ -1,5 +1,6 @@
 package com.dev.dino.workshopmongodb.services;
 
+import com.dev.dino.workshopmongodb.dto.UserDTO;
 import com.dev.dino.workshopmongodb.entities.User;
 import com.dev.dino.workshopmongodb.repositories.UserRepository;
 import com.dev.dino.workshopmongodb.services.exception.ObjectNotFoundException;
@@ -22,5 +23,13 @@ public class UserService {
     public User findById(String id){
         Optional<User> user = repository.findById(id);
         return  user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+    }
+
+    public User insert(User user){
+        return repository.insert(user);
+    }
+
+    public User fromDto(UserDTO userDTO){
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
     }
 }
