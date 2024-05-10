@@ -1,6 +1,7 @@
 package com.dev.dino.workshopmongodb.controllers;
 
 import com.dev.dino.workshopmongodb.dto.UserDTO;
+import com.dev.dino.workshopmongodb.entities.Post;
 import com.dev.dino.workshopmongodb.entities.User;
 import com.dev.dino.workshopmongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class UserController {
         User user = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(user));
     }
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User user = service.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
+    }
 
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody UserDTO userDTO){
@@ -39,6 +45,7 @@ public class UserController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(user.getId()).toUri();
         return  ResponseEntity.created(uri).build();
     }
+
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id){
