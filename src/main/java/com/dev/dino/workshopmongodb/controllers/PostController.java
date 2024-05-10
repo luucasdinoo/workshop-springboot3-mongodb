@@ -1,5 +1,6 @@
 package com.dev.dino.workshopmongodb.controllers;
 
+import com.dev.dino.workshopmongodb.controllers.util.URL;
 import com.dev.dino.workshopmongodb.dto.UserDTO;
 import com.dev.dino.workshopmongodb.entities.Post;
 import com.dev.dino.workshopmongodb.entities.User;
@@ -25,6 +26,12 @@ public class PostController {
     public ResponseEntity<Post> findById(@PathVariable String id){
         Post user = service.findById(id);
         return ResponseEntity.ok().body(user);
+    }
+    @GetMapping(value = "/titlesearch")
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text",defaultValue = "") String text){
+        text = URL.decodParam(text);
+        List<Post> list  = service.findByTitle(text);
+        return ResponseEntity.ok().body(list);
     }
 
 }
