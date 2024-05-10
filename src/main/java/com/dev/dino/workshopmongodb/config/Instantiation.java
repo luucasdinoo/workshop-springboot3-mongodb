@@ -30,6 +30,7 @@ public class Instantiation implements CommandLineRunner {
 
         repository.deleteAll();
         postRepository.deleteAll();
+
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
@@ -39,5 +40,8 @@ public class Instantiation implements CommandLineRunner {
         Post post2 = new Post(null, sdf.parse("23/03/2018"),"Bom dia","Bom dia! Acordei feliz hoje", new AuthorDTO(maria));
 
         postRepository.saveAll(Arrays.asList(post1,post2));
+
+        maria.getPosts().addAll(Arrays.asList(post1,post2));
+        repository.save(maria);
     }
 }
